@@ -13,7 +13,7 @@
         // Навигационноу свойство на таблицу продуктов
         public Product Product { get; set; }
         // Количество проданного товара
-        public int count { get; set; }
+        public int Count { get; set; }
 
     }
 }
