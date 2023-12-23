@@ -61,7 +61,7 @@ namespace Vladlen
                         // случайное ФИО
                         FullName = Faker.Name.FullName(),
                         // Случайный адрес
-                        Adress = $"{Faker.Address.StreetName()} {Faker.Address.StreetAddress}",
+                        Adress = $"{Faker.Address.StreetName()} {Faker.Address.StreetAddress()}",
                         // Случайный номер телефона
                         PhoneNumber = Faker.Phone.Number()
                     };
