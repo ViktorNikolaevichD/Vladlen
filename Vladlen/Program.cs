@@ -1,2 +1,13 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿namespace Vladlen
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            MPI.Environment.Run(ref args, comm =>
+            {
+                
+            });
+        }
+    }
+}
