@@ -35,7 +35,7 @@ namespace Vladlen
             }
         }
         // Сгенерировать данные в базе данных
-        public static void GenerateData(int count, int rank)
+        public static void GenerateData(int count)
         {
             // Подключение к базе данных
             using (var db = new AppDbContext())
@@ -73,8 +73,7 @@ namespace Vladlen
                     Product product = new Product
                     {
                         // Для 0 процесса -> Product{0 + 1 + 0 * count}
-                        // для 1 процесса -> Product{0 + 1 + 1 * count}
-                        ProductName = $"Product{maxId + i + rank * count}"
+                        ProductName = $"Product{maxId + i}"
                     };
                     // Добавить в базу данных случайный продукт
                     db.Products.Add(product);
