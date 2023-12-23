@@ -1,9 +1,39 @@
-﻿using Vladlen.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Vladlen.Entities;
 
 namespace Vladlen
 {
     public class Commands
     {
+        // Загрузить базу данных
+        public static LocalDataBase DownloadDb(int rank, int size)
+        {
+            using (var db = new AppDbContext())
+            {
+                // Число строк в таблицах
+                int countClients = db.Clients.Count();
+                int countProducts = db.Products.Count();
+                int countDocuments = db.Documents.Count();
+
+                // Число строк для взятия из таблицы каждым процессом
+                int takeClients = (countClients / size + 1);
+                int takeProducts = (countProducts / size + 1);
+                int takeDocuments = (countDocuments / size + 1);
+
+                // Число строк для пропуска в таблице каждым процессом
+                int skipClients = rank * takeClients;
+                int skipProducts = rank * takeProducts;
+                int skipDocuments = rank * takeDocuments;
+
+                return new LocalDataBase
+                {
+                    Clients = db.Clients.Skip(skipClients).Take(takeClients).ToList(),
+                    Products = db.Products.Skip(skipProducts).Take(takeProducts).ToList(),
+                    Documents = db.Documents.Include(p => p.Client)
+                                .Include(p => p.Product).Skip(skipDocuments).Take(takeDocuments).ToList(),
+                };
+            }
+        }
         // Сгенерировать данные в базе данных
         public static void GenerateData(int count, int rank)
         {
